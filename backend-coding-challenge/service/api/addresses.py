@@ -2,7 +2,7 @@ import logging
 
 from datetime import datetime, timedelta
 
-from flask import abort, jsonify
+from flask import abort, jsonify, Response
 from webargs.flaskparser import use_args
 
 from marshmallow import Schema, fields
@@ -80,10 +80,9 @@ def create_address(payload, person_id):
         old_st_date = address_seg.start_date
         new_st_date = payload.get("start_date")
         if new_st_date < old_st_date:
-            data = {
-                "messages": f"start_date - {new_st_date}, should be newer than the last address segment start_date"
-            }
-            abort(400, description=data)
+            resp = Response(status=400)
+            resp.data = f"start_date - {new_st_date}, should be newer than the last address segment start_date"
+            abort(resp)
         else:
             if address_seg.end_date is None:
                 # update the existing record by setting the end_date

@@ -22,7 +22,7 @@ def initialize_error_handlers(app: Flask) -> None:
     @app.errorhandler(422)
     @app.errorhandler(400)
     def handle_422_error(err):
-        messages = err.description.get("messages", ["Invalid request."])
+        messages = err.data.get("messages", ["Invalid request."])
         return jsonify({"errors": messages}), err.code
 
     # Return 404 errors as JSON
