@@ -75,7 +75,7 @@ def create_address(payload, person_id):
         # If there are one or more existing AddressSegments, create a new AddressSegment
         # that begins on the start_date provided in the API request and continues
         # into the future. If the start_date provided is not greater than most recent
-        # address segment start_date, raise an Exception.
+        # address segment start_date, raise an Exception. 
         address_seg = person.address_segments[0]
         old_st_date = address_seg.start_date
         new_st_date = payload.get("start_date")
